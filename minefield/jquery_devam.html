@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Gün 3 - jQuery devam</title>
+  <style>
+  #outer {
+    padding: 20px;
+    background-color: pink;
+  }
+  #inner {
+    background-color: lightblue;
+  }
+  #outer2 {
+    margin: 20px;
+    background-color: pink;
+    position: relative;
+    width: 600px;
+    height: 200px;    
+  }
+  #inner2 {
+    background-color: lightblue;
+    width: 50px;
+    height: 50px;    
+    position: absolute;
+    top: 40px;
+    left: 70px;
+  }
+  .rest {
+    display: none;
+  } 
+  .more {
+    cursor: pointer;
+  }
+  </style>
+  <script src="../gun2/jquery-1.11.2.js" ></script>
+  <script>
+$(document).ready(function() {
+  $("#age").keydown(function(eventObj) {
+     console.log(eventObj);
+     var keyCode = eventObj.keyCode;
+     if (keyCode == 13) {
+       alert("searching for: " + $(this).val() );
+       $(this).val("")
+       return true;
+     }
+     else if (keyCode != 8 && (keyCode < 48 || keyCode > 57) ) {
+       return false;
+     }
+  })
+  
+  $("#outer").click(function() { alert("outer clicked") });
+  $("#inner").click(function(event) { 
+     alert("inner clicked");
+     event.stopPropagation();
+     // event.preventDefault();  // mesela a etiketlerinin click olayinda
+  });
+  $("#getAjax").click(function(event) {
+    $.ajax("data.txt", {
+        dataType: "html",
+        data: { 'num1': 7, 'num2': 9 },
+        success: function(data) {
+              $("#content").html(data);
+            },
+        error: function(ajax, status) {
+          console.log(ajax);
+          console.log("AJAX HATA:%s", status);
+        }
+      });
+  })
+  
+  $("#outer2").click(function(event) { 
+    var offset = $("#outer2").offset();
+    var x1 = event.pageX;
+    var y1 = event.pageY;
+    var x2 = offset.left;
+    var y2 = offset.top;
+    // $('#inner2').css("top", y1-y2-25);
+    // $('#inner2').css("left", x1-x2-25);
+    $('#inner2')
+      .animate( {"top": y1-y2-25, "width": "-=20"}, 1000 )
+      .animate( {"left": x1-x2-25, "width": "+=20"}, 1000 )
+    console.log(event);
+  });
+  
+  $("span.more").click(function() {
+    var self = $(this);
+    // var myRestDiv = self.parent().children(".rest");
+    var myRestDiv = self.next(".rest");
+    myRestDiv.addClass("current");
+    /*$(".rest").each(function() {
+      if (! $(this).hasClass("current")) {
+        $(this).fadeOut(1000, function() {
+          myRestDiv.slideDown(1000);          
+        })   
+                
+      }      
+    }) */
+    $(".rest").not(".current").fadeOut(1000, function() {
+          myRestDiv.slideDown(1000);          
+    })
+    myRestDiv.removeClass("current");
+    self.parent().next("li.x").css("background-color", "lightblue");
+  })
+})
+  </script>
+</head>
+<body>
+You age: <input id="age" size=8>
+<div id="outer">
+  Outer div content
+  <div id="inner">Inner div</div>
+</div>  
+<button id="getAjax">Ajax</button>
+<div id="content"></div>
+<div id="outer2">
+  <div id="inner2"></div>
+</div>  
+<ul>
+	<li>bir <span class="more">more</span>
+       <div class="rest">rest of post</div>
+    </li>
+	<li class="x">iki <span class="more">more</span>
+       <div class="rest">rest of post</div></li>
+	<li>uc <span class="more">more</span>
+       <div class="rest">rest of post</div></li>
+	<li class="x">dort <span class="more">more</span>
+       <div class="rest">rest of post</div></li>
+</ul>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

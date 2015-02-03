@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mayin tarlası</title>
+  <style>
+  </style>
+  <script src="../gun2/jquery-1.11.2.js" ></script>
+  <script src="game.js" ></script>
+  <style>
+  #gameArea {
+    display: none;
+  }
+  #field {
+    border-collapse: collapse;
+    border: 1px solid black;
+    margin: 20px auto;
+    
+  }
+  #field td{
+    border: 1px solid black;
+    min-width: 20px;
+    min-height: 20px;
+    text-align: center;
+    empty-cells: show;
+  }
+  #field td.closed{
+    background-color: darkgray;
+  }
+  #field td.flagged{
+    background-color: red;
+  }
+  #field td.mine{
+    background: url("mine_small.jpg") red no-repeat center;
+  }
+  #status {
+    width: 75%;
+    border: 1px solid gray;
+    margin: 10px auto;
+    text-align: center;
+  }
+  </style>
+</head>
+<body>
+<h2>Mayin Tarlasi</h2>
+<div id="gameStart">
+Level : 
+<select id="level-select">
+  <option value="E">Easy</option>
+  <option value="M">Medium</option>
+  <option value="H">Hard</option>
+</select><br/>
+Rows  : <input id="row-cnt" value="8"><br/>
+Cols  : <input id="col-cnt" value="12"><br/>
+Mines : <input id="mine-cnt" value="20"><br/>
+<button id="start">START GAME</button>
+</div>
+<div id="gameArea">
+<table id="field">
+</table>
+<div id="status">
+  Time left: <span id="time"></span>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
